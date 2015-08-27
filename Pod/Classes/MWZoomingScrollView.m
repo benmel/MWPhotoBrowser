@@ -360,7 +360,14 @@
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     self.scrollEnabled = YES; // reset
-	[_photoBrowser cancelControlHiding];
+	scrollView.panGestureRecognizer.enabled = YES;
+    [_photoBrowser cancelControlHiding];
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+    if (scrollView.zoomScale == scrollView.minimumZoomScale) {
+        scrollView.panGestureRecognizer.enabled = NO;
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
